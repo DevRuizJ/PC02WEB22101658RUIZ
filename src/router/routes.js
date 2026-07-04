@@ -5,8 +5,8 @@ const routes = [
     children: [
       //{ path: '', component: () => import('@/pages/IndexPage.vue') },
       //{ path: 'second', component: () => import('@/pages/SecondPage.vue') }
-      { path: '', name: 'directorio', component: () => import('@/pages/DirectorioPage.vue') }
-      //{ path: 'empleados/:id', name: 'empleado-detalle', component: () => import('@/pages/EmpleadoDetallePage.vue')}
+      { path: '', name: 'directorio', component: () => import('@/pages/DirectorioPage.vue') },
+      { path: 'dashboard', name: 'dashboard-gerencial', component: () => import('@/pages/DashboardPage.vue')}
     ]
   },
 
