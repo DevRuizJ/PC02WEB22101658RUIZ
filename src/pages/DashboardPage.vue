@@ -91,7 +91,6 @@ import CardIndicador from '../components/CardIndicator.vue'
 
 const loading = ref(false)
 
-// Estado reactivo que guardará los cálculos requeridos
 const metricas = ref({
   total: 0,
   hombres: 0,
@@ -104,34 +103,28 @@ const metricas = ref({
 const cargarDatosDashboard = async () => {
   loading.value = true
   try {
-    // IMPORTANTE: limit=0 le indica a DummyJSON que devuelva TODOS los usuarios existentes
     const response = await axios.get('https://dummyjson.com/users', {
       params: { limit: 0 }
     })
 
     const todosLosUsuarios = response.data.users || []
 
-    // 1. Total de usuarios
     const total = todosLosUsuarios.length
 
     if (total > 0) {
-      // 2 y 3. Conteo de Géneros
       const hombres = todosLosUsuarios.filter(u => u.gender === 'male').length
       const mujeres = todosLosUsuarios.filter(u => u.gender === 'female').length
 
-      // 4. Promedio de Edad
       const sumaEdades = todosLosUsuarios.reduce((acc, u) => acc + (u.age || 0), 0)
       const promedioEdad = (sumaEdades / total).toFixed(1)
 
-      // 5. Número de empresas distintas (Usamos Set para eliminar duplicados de forma eficiente)
       const empresasSet = new Set(
         todosLosUsuarios
           .map(u => u.company?.name?.trim())
-          .filter(name => name) // Filtra valores falsy o nulos
+          .filter(name => name)
       )
       const empresasDistintas = empresasSet.size
 
-      // 6. Número de ciudades distintas (Usamos Set para eliminar duplicados)
       const ciudadesSet = new Set(
         todosLosUsuarios
           .map(u => u.address?.city?.trim())
@@ -139,7 +132,6 @@ const cargarDatosDashboard = async () => {
       )
       const ciudadesDistintas = ciudadesSet.size
 
-      // Asignamos los cálculos al estado reactivo
       metricas.value = {
         total,
         hombres,

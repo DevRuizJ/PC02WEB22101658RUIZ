@@ -21,7 +21,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 
-// Definimos propiedades para que el componente sea altamente reutilizable
 const props = defineProps({
   modelValue: {
     type: String,
@@ -37,24 +36,19 @@ const props = defineProps({
   }
 })
 
-// Definimos los eventos que emitirá hacia el padre
 const emit = defineEmits(['update:model-value', 'search'])
 
-// Estado local sincronizado
 const searchLocal = ref(props.modelValue)
 
-// Escuchar si el valor cambia desde el exterior (ej. si se limpia desde fuera)
 watch(() => props.modelValue, (newVal) => {
   searchLocal.value = newVal
 })
 
-// Emete el evento cada vez que el debounce de Quasar termina de procesar la escritura
 const onSearchChange = (value) => {
   emit('update:model-value', value)
   emit('search', value)
 }
 
-// Función adicional muy útil para limpiar el buscador con un clic en la 'X'
 const clearSearch = () => {
   if (searchLocal.value) {
     searchLocal.value = ''

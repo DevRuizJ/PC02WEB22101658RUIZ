@@ -112,7 +112,6 @@ const modalAbierto = ref(false)
 const empleadoSeleccionado = ref(null)
 const loadingDetalleId = ref(null)
 
-// ESTADOS PARA LA SELECCIÓN Y COMPARACIÓN MODULAR
 const seleccionados = ref([])
 const modalComparadorAbierto = ref(false)
 const usuariosAComparar = ref([])
