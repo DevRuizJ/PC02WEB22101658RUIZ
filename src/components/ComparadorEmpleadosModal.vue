@@ -75,7 +75,6 @@ const isOpen = computed({
   set: (value) => emit('update:model-value', value)
 })
 
-// Mapeamos dinámicamente las propiedades de ambos usuarios solicitadas por el requerimiento
 const filasComparativas = computed(() => {
   if (!props.usuarios || props.usuarios.length < 2) return []
 

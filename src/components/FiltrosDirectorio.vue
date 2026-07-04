@@ -97,7 +97,6 @@ const props = defineProps({
 
 const emit = defineEmits(['change'])
 
-// Estado interno de los filtros
 const filtros = ref({
   gender: null,
   company: null,
@@ -113,7 +112,6 @@ const opcionesGenero = [
   { label: 'Masculino', value: 'male' }
 ]
 
-// --- Extracción de Opciones Únicas dinámicamente desde las Props ---
 const opcionesEmpresa = computed(() => {
   const distintas = new Set(props.usuarios.map(u => u.company?.name).filter(Boolean))
   return Array.from(distintas).sort()
@@ -129,14 +127,12 @@ const opcionesPais = computed(() => {
   return Array.from(distintas).sort()
 })
 
-// Variables para el soporte de búsqueda interna dentro de los QSelects (Autocomplete)
 const opcionesEmpresaFiltradas = ref([])
 const opcionesCiudadFiltradas = ref([])
 
 watch(opcionesEmpresa, (val) => { opcionesEmpresaFiltradas.value = val }, { immediate: true })
 watch(opcionesCiudad, (val) => { opcionesCiudadFiltradas.value = val }, { immediate: true })
 
-// Manejadores de auto-completado/búsqueda en los combos
 const filtrarEmpresas = (val, update) => {
   update(() => {
     const aguja = val.toLowerCase()
@@ -151,7 +147,6 @@ const filtrarCiudades = (val, update) => {
   })
 }
 
-// Emite los filtros actuales hacia el componente padre
 const notificarCambio = () => {
   emit('change', { ...filtros.value })
 }

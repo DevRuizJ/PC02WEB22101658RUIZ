@@ -104,7 +104,6 @@ import { useUserStore } from '../stores/userStore'
 import BuscadorEmpleados from '../components/BuscadorEmpleados.vue'
 import DetalleEmpleadoModal from '../components/DetalleEmpleadoModal.vue'
 import FiltrosDirectorio from '../components/FiltrosDirectorio.vue'
-// IMPORTACIÓN DEL NUEVO COMPONENTE COMPARADOR
 import ComparadorEmpleadosModal from '../components/ComparadorEmpleadosModal.vue'
 
 const userStore = useUserStore()
@@ -167,15 +166,12 @@ const onRequest = async (props) => {
 
 const manejarCambioFiltros = (nuevosFiltros) => { filtrosActivos.value = nuevosFiltros }
 
-// ACCIÓN: Consume secuencialmente el endpoint por ID para ambos colaboradores antes de abrir el modal
 const abrirComparador = async () => {
   if (seleccionados.value.length !== 2) return
 
-  // Bloqueamos la UI con el loading nativo de Quasar mientras descargamos los detalles técnicos completos
   const [user1, user2] = seleccionados.value
 
   try {
-    // Ejecutamos ambas peticiones en paralelo de forma eficiente usando Promise.all
     const [res1, res2] = await Promise.all([
       axios.get(`https://dummyjson.com/users/${user1.id}`),
       axios.get(`https://dummyjson.com/users/${user2.id}`)
