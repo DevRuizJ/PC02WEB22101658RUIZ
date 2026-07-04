@@ -6,7 +6,7 @@ export const useUserStore = defineStore('user', {
     users: [],
     loading: false,
     totalUsers: 0,
-    currentUser: null, // Guardará el usuario seleccionado para el detalle
+    currentUser: null,
     pagination: {
       page: 1,
       rowsPerPage: 10
@@ -14,16 +14,21 @@ export const useUserStore = defineStore('user', {
   }),
 
   actions: {
-    async fetchUsers(page = 1, limit = 10) {
+    async fetchUsers(page = 1, limit = 10, searchQuery = '') {
       this.loading = true
       this.pagination.page = page
       this.pagination.rowsPerPage = limit
+      this.searchQuery = searchQuery
 
       const skip = (page - 1) * limit
 
+      const url = searchQuery
+        ? 'https://dummyjson.com/users/search'
+        : 'https://dummyjson.com/users'
+
       try {
-        const response = await axios.get('https://dummyjson.com/users', {
-          params: { limit, skip }
+        const response = await axios.get(url, {
+          params: { limit, skip, ...(searchQuery && { q: searchQuery }) }
         })
 
         this.users = response.data.users
